@@ -30,7 +30,7 @@ def input_maze():
         size = int(input("How many strings/columns will be in your maze? "))
         print("\nEnter symbols in every string, but don't separate them (you can write '.' instead of spaces). Example: S##.#F \n")
         for string in range(size):
-            print(f"{string}.", end=' ')
+            print(f"{string+1}.", end=' ')
             new_str = [i if i != '.' else ' ' for i in input()]
             maze.append(new_str)
 
