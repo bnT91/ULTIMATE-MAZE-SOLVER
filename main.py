@@ -82,8 +82,9 @@ def main():
     used[start[0]][start[1]] = True
 
     while len(q) > 0:
-        new_node = q[-1]
-        q.pop(0)
+        new_node = q[len(q)-1]
+
+        q.pop()
 
         for ch in range(len(graph[new_node[0]][new_node[1]])):
             new_child = graph[new_node[0]][new_node[1]][ch]
@@ -94,6 +95,7 @@ def main():
                 parents[new_child[0]][new_child[1]] = new_node
 
     if not used[target[0]][target[1]]:
+        print(used)
         print("It's impossible to solve this maze!")
         return
 
