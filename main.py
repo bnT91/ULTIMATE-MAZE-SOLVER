@@ -12,6 +12,29 @@ maze = [
 ]
 
 
+def input_maze():
+    global maze, size
+    print("Hello! It's maze solver. I can solve square mazes and find optimal ways from start to finish.")
+    print(f"""There are symbols that I use and understand:
+
+1. {c.Fore.RED + "#" + c.Fore.RESET} (barrier)
+2. {c.Fore.YELLOW + "S" + c.Fore.RESET} (start)
+3. {c.Fore.YELLOW + "F" + c.Fore.RESET} (finish)
+4. {c.Fore.GREEN + "@" + c.Fore.RESET} (part of path from start to finish, don't use while entering your maze)
+    """)
+    guess = input("Do you want me to solve your maze or my default? (enter 1 or 2): ")
+    if guess[0] == "1":
+        maze.clear()
+
+        print()
+        size = int(input("How many strings/columns will be in your maze? "))
+        print("\nEnter symbols in every string, but don't separate them. Example: S## #F \n")
+        for string in range(size):
+            print(f"{string}.", end=' ')
+            new_str = [i for i in input()]
+            maze.append(new_str)
+
+
 def print_maze():
     print(c.Fore.RESET + "_ " * (size+2))
     print()
@@ -24,12 +47,18 @@ def print_maze():
             elif sym in ["S", "F"]:
                 print(c.Fore.YELLOW + sym, end=' ')
                 continue
+            elif sym == "@":
+                print(c.Fore.GREEN + sym, end=' ')
+                continue
             print(c.Fore.RESET + sym, end=' ')
         print(c.Fore.RESET + "|")
     print(c.Fore.RESET + "_ " * (size+2))
 
 
 def main():
+    input_maze()
+
+    print(c.Fore.CYAN + "Initial maze: ")
     print_maze()
 
     start, target = 0, 0
@@ -68,7 +97,24 @@ def main():
         print("It's impossible to solve this maze!")
         return
 
-    print(dists[target[0]][target[1]])
+    print()
+    print(c.Fore.CYAN + "Minimal length of path from start to finish for this maze:", c.Fore.LIGHTMAGENTA_EX + str(dists[target[0]][target[1]]),
+          c.Fore.RESET)
+
+    path = list()
+    v = target
+    while v != -1:
+        path.append(v)
+        v = parents[v[0]][v[1]]
+
+    path.reverse()
+
+    for elm in path:
+        maze[elm[0]][elm[1]] = "@"
+
+    print()
+    print(c.Fore.LIGHTMAGENTA_EX + "The way from start from finish: ")
+    print_maze()
 
 
 if __name__ == "__main__":
