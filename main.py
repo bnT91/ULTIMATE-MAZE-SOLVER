@@ -103,10 +103,11 @@ def main():
         for ch in range(len(graph[new_node[0]][new_node[1]])):
             new_child = graph[new_node[0]][new_node[1]][ch]
             if not used[new_child[0]][new_child[1]]:
-                used[new_child[0]][new_child[1]] = True
                 q.append(new_child)
-                dists[new_child[0]][new_child[1]] = dists[new_node[0]][new_node[1]] + 1
-                parents[new_child[0]][new_child[1]] = new_node
+                if dists[new_node[0]][new_node[1]] + 1 < dists[new_child[0]][new_child[1]] or not used[new_child[0]][new_child[1]]:
+                    dists[new_child[0]][new_child[1]] = dists[new_node[0]][new_node[1]] + 1
+                    parents[new_child[0]][new_child[1]] = new_node
+                used[new_child[0]][new_child[1]] = True
 
     if not used[target[0]][target[1]]:
         print(used)
@@ -135,3 +136,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    input()
