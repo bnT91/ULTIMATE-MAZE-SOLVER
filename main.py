@@ -26,23 +26,27 @@ maze2 = [
 ]
 
 
-def input_maze():
-    global maze, size
+def print_rules():
     print("Hello! It's maze solver. I can solve square mazes and find optimal ways from start to finish.")
     print(f"""There are symbols that I use and understand:
 
-1. {c.Fore.RED + "#" + c.Fore.RESET} (barrier)
-2. {c.Fore.YELLOW + "S" + c.Fore.RESET} (start)
-3. {c.Fore.YELLOW + "F" + c.Fore.RESET} (finish)
-4. {c.Fore.GREEN + "@" + c.Fore.RESET} (part of path from start to finish, don't use while entering your maze)
-    """)
-    guess = input("Do you want me to solve your maze or my default? (enter 1 or 2): ")
-    if guess[0] == "1":
+    1. {c.Fore.RED + "#" + c.Fore.RESET} (barrier)
+    2. {c.Fore.YELLOW + "S" + c.Fore.RESET} (start)
+    3. {c.Fore.YELLOW + "F" + c.Fore.RESET} (finish)
+    4. {c.Fore.GREEN + "@" + c.Fore.RESET} (part of path from start to finish, don't use while entering your maze)
+        """)
+
+
+def input_maze():
+    global maze, size
+
+    user_guess = input("Do you want me to solve your maze or my default? (enter 1 or 2): ")
+
+    if user_guess[0] == "1":
         maze.clear()
-        print()
 
         size = int(input("How many strings/columns will be in your maze? "))
-        print("\nEnter symbols in every string, but don't separate them (you can write '.' instead of spaces). Example: S##.#F \n")
+        print("Enter symbols in every string, but don't separate them (you can write '.' instead of spaces). Example: S##.#F \n")
         for string in range(size):
             print(f"{string+1}.", end=' ')
             new_str = [i if i != '.' else ' ' for i in input()]
@@ -71,6 +75,8 @@ def print_maze():
 
 def main():
     input_maze()
+
+    print()
 
     print(c.Fore.CYAN + "Initial maze: ")
     print_maze()
@@ -110,7 +116,6 @@ def main():
                 used[new_child[0]][new_child[1]] = True
 
     if not used[target[0]][target[1]]:
-        print(used)
         print("It's impossible to solve this maze!")
         return
 
@@ -135,5 +140,18 @@ def main():
 
 
 if __name__ == "__main__":
+    print_rules()
     main()
+    guess = True
+    while guess:
+        print()
+        print()
+        new_launch = input("Would you like me to solve another maze? (type yes or no): ")
+        if new_launch.lower()[0] == "n":
+            guess = False
+        else:
+            print()
+            print()
+            main()
+
     input()
