@@ -25,8 +25,8 @@ def input_maze():
     guess = input("Do you want me to solve your maze or my default? (enter 1 or 2): ")
     if guess[0] == "1":
         maze.clear()
-
         print()
+
         size = int(input("How many strings/columns will be in your maze? "))
         print("\nEnter symbols in every string, but don't separate them (you can write '.' instead of spaces). Example: S##.#F \n")
         for string in range(size):
