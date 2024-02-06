@@ -102,9 +102,8 @@ def main():
     used[start[0]][start[1]] = True
 
     while len(q) > 0:
-        new_node = q[len(q)-1]
-
-        q.pop()
+        new_node = q[0]
+        q.pop(0)
 
         for ch in range(len(graph[new_node[0]][new_node[1]])):
             new_child = graph[new_node[0]][new_node[1]][ch]
