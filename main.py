@@ -129,7 +129,7 @@ def main():
         maze[elm[0]][elm[1]] = "@"
 
     print()
-    print(c.Fore.LIGHTMAGENTA_EX + "The way from start from finish: ")
+    print(c.Fore.LIGHTMAGENTA_EX + "The way from start to finish: ")
     print_maze()
 
 
