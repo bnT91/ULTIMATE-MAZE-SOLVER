@@ -63,7 +63,7 @@ def input_maze():
             return
 
         print("OK, now you need to create new file with the maze in the folder that called \"mazes\".\nFirst string of the file has to be a number of lines/columns in the maze. After it, "
-              "type the maze in my format, \nseparating lines by ENTER. Than, tell me the name of your file. Enter it here: ", end="")
+              "type the maze in my format, \nseparating lines by ENTER. Then, tell me the name of your file. Enter it here: ", end="")
         filename = input()
         try:
             with open("mazes/" + filename, "r") as f:
