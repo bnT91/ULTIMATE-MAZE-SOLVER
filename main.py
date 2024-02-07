@@ -4,7 +4,7 @@ import colorama as c
 
 size = 10
 
-maze = [
+template = [
     ['S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
     [' ', ' ', '#', ' ', '#', '#', '#', '#', '#', ' '],
     [' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -16,6 +16,8 @@ maze = [
     [' ', '#', 'F', '#', ' ', ' ', ' ', ' ', ' ', '#'],
     [' ', '#', ' ', ' ', ' ', '#', '#', '#', '#', '#']
 ]
+
+maze = template
 
 maze2 = [
     ['S', '#', '#', ' ', 'F'],
@@ -60,19 +62,22 @@ def input_maze():
                 maze.append(new_str)
             return
 
-    print("OK, now you need to create new file with the maze in the folder that called \"mazes\".\nFirst string of the file has to be a number of lines/columns in the maze. After it, "
-          "type the maze in my format, \nseparating lines by ENTER. Than, tell me the name of your file. Enter it here: ", end="")
-    filename = input()
-    try:
-        with open("mazes/" + filename, "r") as f:
-            data = f.readlines()
-            size = int(data[0].rstrip())
-            for line in data[1:]:
-                line = line.rstrip()
-                new_str = [i if i != '.' else ' ' for i in line]
-                maze.append(new_str)
-    except FileNotFoundError:
-        print(f"I can't find {filename} in the \"mazes\" folder.")
+        print("OK, now you need to create new file with the maze in the folder that called \"mazes\".\nFirst string of the file has to be a number of lines/columns in the maze. After it, "
+              "type the maze in my format, \nseparating lines by ENTER. Than, tell me the name of your file. Enter it here: ", end="")
+        filename = input()
+        try:
+            with open("mazes/" + filename, "r") as f:
+                data = f.readlines()
+                size = int(data[0].rstrip())
+                for line in data[1:]:
+                    line = line.rstrip()
+                    new_str = [i if i != '.' else ' ' for i in line]
+                    maze.append(new_str)
+        except FileNotFoundError:
+            print(f"I can't find {filename} in the \"mazes\" folder.")
+    else:
+        maze = template
+        size = 10
 
 
 def print_maze():
@@ -155,7 +160,7 @@ def main():
 
     path.reverse()
 
-    for elm in path:
+    for elm in path[1:-1]:
         maze[elm[0]][elm[1]] = "@"
 
     print()
