@@ -34,6 +34,10 @@ def print_rules():
     2. {c.Fore.YELLOW + "S" + c.Fore.RESET} (start)
     3. {c.Fore.YELLOW + "F" + c.Fore.RESET} (finish)
     4. {c.Fore.GREEN + "@" + c.Fore.RESET} (part of path from start to finish, don't use while entering your maze)
+
+You can write your own mazes for me. There are two ways to do it: using keyboard or creating new file.
+
+For coders: my main algorithm is modified BFS. That uses queue to process all the node points of graph.
         """)
 
 
@@ -45,12 +49,30 @@ def input_maze():
     if user_guess[0] == "1":
         maze.clear()
 
-        size = int(input("How many strings/columns will be in your maze? "))
-        print("Enter symbols in every string, but don't separate them (you can write '.' instead of spaces). Example: S##.#F \n")
-        for string in range(size):
-            print(f"{string+1}.", end=' ')
-            new_str = [i if i != '.' else ' ' for i in input()]
-            maze.append(new_str)
+        input_type = input("Do you want to type every line in maze using keyboard or create file with maze? (enter 1 or 2): ")
+
+        if input_type[0] != "2":
+            size = int(input("How many line/columns will be in your maze? "))
+            print("Enter symbols in every line, but don't separate them (you can write '.' instead of spaces). Example: S##.#F \n")
+            for string in range(size):
+                print(f"{string+1}.", end=' ')
+                new_str = [i if i != '.' else ' ' for i in input()]
+                maze.append(new_str)
+            return
+
+    print("OK, now you need to create new file with the maze in the folder that called \"mazes\".\nFirst string of the file has to be a number of lines/columns in the maze. After it, "
+          "type the maze in my format, \nseparating lines by ENTER. Than, tell me the name of your file. Enter it here: ", end="")
+    filename = input()
+    try:
+        with open("mazes/" + filename, "r") as f:
+            data = f.readlines()
+            size = int(data[0].rstrip())
+            for line in data[1:]:
+                line = line.rstrip()
+                new_str = [i if i != '.' else ' ' for i in line]
+                maze.append(new_str)
+    except FileNotFoundError:
+        print(f"I can't find {filename} in the \"mazes\" folder.")
 
 
 def print_maze():
@@ -75,6 +97,9 @@ def print_maze():
 
 def main():
     input_maze()
+
+    if not maze:
+        return
 
     print()
 
@@ -144,12 +169,10 @@ if __name__ == "__main__":
     guess = True
     while guess:
         print()
-        print()
         new_launch = input("Would you like me to solve another maze? (type yes or no): ")
         if new_launch.lower()[0] == "n":
             guess = False
         else:
-            print()
             print()
             main()
 
